@@ -1,0 +1,10 @@
+{
+    "name": "NFT3",
+    "description": "NFT Description 3",
+    "image": "https://ipfs.io/ipfs/QmNQiu91EdQCHGHu8zuxyhdaqBXsjeaAQNY4vmqjUBrv6Y",
+    "attributes": [
+    {
+    "trait_type": "Score",
+    "value": "10"
+    }
+    ] }

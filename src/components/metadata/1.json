@@ -1,0 +1,10 @@
+{
+    "name": "NFT1",
+    "description": "NFT Description 1",
+    "image": "https://ipfs.io/ipfs/QmbL5iM47w21zc8EZPPEPbvQcUN6iuossqu3Md6y5gybES",
+    "attributes": [
+    {
+    "trait_type": "Point",
+    "value": "3"
+    }
+    ] }

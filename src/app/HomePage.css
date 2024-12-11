@@ -1,0 +1,119 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f3f4f6; /* Very light grayish-blue background */
+  margin: 0;
+}
+
+.container {
+  max-width: 450px;
+  margin: 50px auto;
+  padding: 40px;
+  background: linear-gradient(145deg, #ffffff, #f3f4f6); /* Soft gradient */
+  border-radius: 16px;
+  box-shadow: 0px 12px 35px rgba(0, 0, 0, 0.15); /* Deep shadow for pop-out effect */
+  text-align: center; /* Center-align content */
+  animation: fadeIn 0.5s ease-out; /* Fade-in animation */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.title {
+  font-size: 36px;
+  color: #1f2937; /* Dark slate gray */
+  margin-bottom: 8px;
+  letter-spacing: 1px; /* Subtle letter spacing */
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #6b7280; /* Medium gray */
+  margin-bottom: 30px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Add spacing between form elements */
+}
+
+.input-group label {
+  display: block;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #374151; /* Dark gray for labels */
+  text-align: left;
+}
+
+.input-container {
+  display: flex;
+  gap: 10px;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #d1d5db; /* Light gray border */
+  border-radius: 8px; /* Rounded corners */
+  font-size: 15px;
+  color: #111827; /* Dark text */
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition */
+}
+
+input[type="text"]:focus {
+  border-color: #2563eb; /* Blue highlight on focus */
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.4); /* Blue glow */
+}
+
+.create-room-button {
+  padding: 10px 15px;
+  background: linear-gradient(145deg, #3b82f6, #2563eb); /* Gradient for the button */
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s; /* Smooth transitions */
+}
+
+.create-room-button:hover {
+  background: linear-gradient(145deg, #2563eb, #1e40af); /* Darker gradient on hover */
+  transform: translateY(-2px); /* Subtle lift on hover */
+}
+
+.join-room-button {
+  padding: 12px;
+  background: linear-gradient(145deg, #10b981, #059669); /* Green gradient */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.join-room-button:hover {
+  background: linear-gradient(145deg, #059669, #065f46); /* Darker gradient on hover */
+  transform: translateY(-2px); /* Subtle lift on hover */
+}
+
+.join-room-button:disabled {
+  background-color: #d1d5db; /* Gray for disabled state */
+  cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 20px;
+  }
+}

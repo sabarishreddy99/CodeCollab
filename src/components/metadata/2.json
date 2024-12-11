@@ -1,0 +1,10 @@
+{
+    "name": "NFT2",
+    "description": "NFT Description 2",
+    "image": "https://ipfs.io/ipfs/QmXzqocSFuMyKGWMTLkc1PVkyobpiosgjDYndxiQHFcR3u",
+    "attributes": [
+    {
+    "trait_type": "Accuracy",
+    "value": "99"
+    }
+    ] }
