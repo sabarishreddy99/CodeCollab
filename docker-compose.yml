@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  codecollab-x86:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      platform: linux/amd64
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+    command: "npm start"

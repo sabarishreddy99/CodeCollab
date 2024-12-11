@@ -1,0 +1,9 @@
+# For Apple silicon
+
+docker build -t codeCollab .
+docker run -p 3000:3000 codecollab
+
+
+
+
+# For X86 Intel 
