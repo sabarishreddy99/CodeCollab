@@ -3,6 +3,25 @@
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 
+interface RoomData {
+  roomId: string;
+  language: string;
+  exists: boolean;
+  codeRunner: string;
+  data: {
+    roomId: string;
+    codeRunner: string;
+    bucketid: string;
+    language: string;
+    members: string[];
+  };
+}
+
+interface EditorProps {
+  roomData: RoomData;
+  username: string;
+}
+
 // Dynamic import for components that use browser-specific APIs
 const EditorComponent = dynamic(() => 
   import('@/components/EditorClient').then(mod => mod.EditorClient), 
@@ -12,12 +31,7 @@ const EditorComponent = dynamic(() =>
   }
 );
 
-interface RoomProps {
-  roomId: string;
-  username: string;
-}
-
-export function CollaborativeEditor({ roomId, username }: RoomProps) {
+export function CollaborativeEditor({ roomData, username }: EditorProps) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -28,5 +42,8 @@ export function CollaborativeEditor({ roomId, username }: RoomProps) {
     return null;
   }
 
-  return <EditorComponent roomId={roomId} username={username} />;
+  return <EditorComponent 
+    roomData={roomData}
+    username={username}
+  />;
 }

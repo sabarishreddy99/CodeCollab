@@ -1,3 +1,73 @@
-.buttons{
-    margin-left: 15px;
+.buttonContainer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+  
+.languageSelect {
+    padding: 8px 32px 8px 12px;
+    font-size: 14px;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+}
+  
+.languageSelect:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.4);
+}
+  
+.languageSelect option {
+    background-color: #1a1a1a;
+    color: white;
+}
+  
+.button {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+  
+.button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+  
+.runButton {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+  
+.runButton:hover {
+    background-color: #1d4ed8;
+}
+  
+.saveButton {
+    background-color: #059669;
+    border-color: #059669;
+}
+  
+.saveButton:hover {
+    background-color: #047857;
+}
+
+.logoutButton {
+    background-color: #dc2626;
+    border-color: #dc2626;
+}
+
+.logoutButton:hover {
+    background-color: #b91c1c;
 }

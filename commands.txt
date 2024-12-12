@@ -8,3 +8,7 @@ docker run -p 3000:3000 codecollab
 
 # For X86 Intel 
 docker build --platform=linux/amd64 -t codecollab-x86 .
+
+
+
+aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 897722671286.dkr.ecr.us-east-2.amazonaws.com

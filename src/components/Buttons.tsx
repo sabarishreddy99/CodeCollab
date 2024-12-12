@@ -4,45 +4,46 @@ import { editor } from 'monaco-editor';
 
 interface ButtonsProps {
     editorRef: editor.IStandaloneCodeEditor | undefined;
-    updateOutput: (output: string) => void; // New prop for updating output
+    updateOutput: (output: string) => void;
+    codeRunnerUrl: string;
+    language: string;
+    onLogout?: () => void;
+    onNavigateHome: () => void;  // New prop for handling navigation
 }
 
-export function Buttons({ editorRef, updateOutput }: ButtonsProps) {
-    const [selectedLanguage, setSelectedLanguage] = useState('python'); // Default to Python
+export function Buttons({ 
+    editorRef, 
+    updateOutput, 
+    codeRunnerUrl, 
+    language, 
+    onLogout,
+    onNavigateHome 
+}: ButtonsProps) {
+    const [isRunning, setIsRunning] = useState(false);
 
     const handleClick = (message: string) => {
         alert(message);
     };
 
-    const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedLanguage(event.target.value);
+    const handleLogout = async () => {
+        if (onLogout) {
+            await onLogout();
+        }
+        onNavigateHome();
     };
 
     const runCode = async () => {
-        if (!editorRef) return; // Ensure editorRef is available
+        if (!editorRef) return;
 
-
-        const pythonLB = "http://fargateLoad-928083646.us-east-2.elb.amazonaws.com:8080/process_code?language=python";
-        const cppLB = "http://ecscpploadbal-1198534135.us-east-2.elb.amazonaws.com:8080/process_code?language=cpp";
-        const javascriptLB = "http://ecsnodeloadbal-789641141.us-east-2.elb.amazonaws.com:8080/process_code?language=javascript";
-
-        let runtimeEnvLB = pythonLB;
-        if (selectedLanguage === 'javascript') {
-            runtimeEnvLB = javascriptLB;
-        }
-        else if (selectedLanguage === 'cpp') {
-            runtimeEnvLB = cppLB;
-        }
-
-        const code = editorRef.getValue(); // Gets multiline code as a single string with line breaks
-        const postData = {
-            code,
-        };
+        setIsRunning(true);
+        updateOutput("Running code...");
+        
+        const code = editorRef.getValue();
+        const postData = { code };
 
         try {
-            const response = await fetch(runtimeEnvLB, {
+            const response = await fetch(codeRunnerUrl, {
                 method: "POST",
-                mode: "cors",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -51,34 +52,48 @@ export function Buttons({ editorRef, updateOutput }: ButtonsProps) {
 
             if (response.ok) {
                 const result = await response.json();
-                console.log("Execution Result:", result);
-                updateOutput(result.output); // Update output state in parent component
+                updateOutput(result.output);
             } else {
-                console.error("Error:", await response.text());
-                updateOutput("Error executing code."); // Update output with error message
+                const errorText = await response.text();
+                updateOutput(`Error: ${errorText}`);
             }
         } catch (err) {
-            console.error("API Error:", err);
             if (err instanceof Error) {
-                updateOutput(err.message); // Update output with error message
+                updateOutput(`Error: ${err.message}`);
             } else {
-                updateOutput("An unknown error occurred."); // Handle unknown error type
+                updateOutput("An unknown error occurred.");
             }
-            // updateOutput("API Error occurred."); // Update output with error message
+        } finally {
+            setIsRunning(false);
         }
     };
 
     return (
-        <div>
-            <select value={selectedLanguage} onChange={handleLanguageChange}>
-                <option value="javascript">Js</option>
-                <option value="python">Python</option>
-                <option value="cpp">C++</option>
-            </select>
+        <div className={styles.buttonContainer}>
+            <div className={styles.languageIndicator}>
+                {language.toUpperCase()}
+            </div>
 
-            {/* Update Run button to call runCode */}
-            <button className={`${styles.buttons}`} onClick={runCode}>Run</button>
-            <button className={`${styles.buttons}`} onClick={() => handleClick('Save Snapshot button clicked')}>Save Snapshot</button>
+            <button 
+                className={`${styles.button} ${styles.runButton}`} 
+                onClick={runCode}
+                disabled={isRunning}
+            >
+                {isRunning ? 'Running...' : 'Run Code'}
+            </button>
+            <button 
+                className={`${styles.button} ${styles.saveButton}`} 
+                onClick={() => handleClick('Save Snapshot button clicked')}
+                disabled={isRunning}
+            >
+                Save Snapshot
+            </button>
+            <button 
+                className={`${styles.button} ${styles.logoutButton}`} 
+                onClick={handleLogout}
+            >
+                Logout
+            </button>
         </div>
     );
 }

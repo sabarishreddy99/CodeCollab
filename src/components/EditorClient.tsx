@@ -15,19 +15,46 @@ import { Toolbar } from "@/components/Toolbar";
 import { useOthers, useSelf } from "@liveblocks/react/suspense";
 import { Buttons } from "./Buttons";
 import Clock from "./Clock";
+import { useRouter } from 'next/navigation';
+import { Copy } from 'lucide-react'; // Import the copy icon
+
+interface RoomData {
+  roomId: string;
+  language: string;
+  exists: boolean;
+  codeRunner: string;
+  data: {
+    roomId: string;
+    codeRunner: string;
+    bucketid: string;
+    language: string;
+    members: string[];
+  };
+}
 
 interface RoomProps {
-  roomId: string;
+  roomData: RoomData;
   username: string;
 }
 
-export function EditorClient({ roomId, username }: RoomProps) {
+export function EditorClient({ roomData, username }: RoomProps) {
+  const router = useRouter();
   const room = useRoom();
   const users = useOthers();
   const currentUser = useSelf();
   const [provider, setProvider] = useState<LiveblocksYjsProvider>();
   const [editorRef, setEditorRef] = useState<editor.IStandaloneCodeEditor>();
-  const [output, setOutput] = useState<string>(""); 
+  const [output, setOutput] = useState<string>("");
+
+  const copyRoomId = async () => {
+    try {
+      await navigator.clipboard.writeText(roomData.roomId);
+      alert('Room ID copied to clipboard!');
+    } catch (err) {
+      alert('Failed to copy room ID');
+      console.error('Failed to copy:', err);
+    }
+  };
 
   useEffect(() => {
     let yProvider: LiveblocksYjsProvider;
@@ -57,36 +84,83 @@ export function EditorClient({ roomId, username }: RoomProps) {
 
   const handleOnMount = useCallback((e: editor.IStandaloneCodeEditor) => {
     setEditorRef(e);
-  }, []);
+    const model = e.getModel();
+    if (model) {
+      editor.setModelLanguage(model, roomData.language);
+    }
+    
+    e.updateOptions({
+      fontSize: 14,
+      lineHeight: 1.6,
+      minimap: { enabled: false },
+      scrollbar: {
+        vertical: 'visible',
+        horizontal: 'visible'
+      },
+      padding: { top: 16, bottom: 16 }
+    });
+  }, [roomData.language]);
 
-  const updateOutput = (newOutput: string) => {
-    setOutput(newOutput);
+  const handleLogout = async () => {
+    await room.disconnect();
   };
 
   return (
     <div className={styles.container}>
       {provider ? <Cursors yProvider={provider} /> : null}
+      
       <div className={styles.editorHeader}>
         <div>{editorRef ? <Toolbar editor={editorRef} /> : null}</div>
-        <Clock />
-        <Buttons editorRef={editorRef} updateOutput={updateOutput} />
+        <Buttons 
+          editorRef={editorRef} 
+          updateOutput={setOutput}
+          codeRunnerUrl={roomData.codeRunner}
+          language={roomData.language}
+          onLogout={handleLogout}
+          onNavigateHome={() => router.push('/')}
+        />
         <Avatars />
       </div>
+
       <div className={styles.userData}>
-        <p><strong>Room Id:</strong> {roomId}</p>
-        <p><strong>Welcome, </strong>{username}</p>      
+        <div className={styles.userDataItem}>
+          <span className={styles.userDataLabel}>Room ID:</span>
+          <span className={styles.userDataValue}>{roomData.roomId}</span>
+          <button
+            onClick={copyRoomId}
+            className="ml-2 p-1 hover:bg-gray-200 rounded-md transition-colors"
+            title="Copy Room ID"
+          >
+            <Copy size={16} />
+          </button>
+        </div>
+        <div className={styles.userDataItem}>
+          <span className={styles.userDataLabel}>Welcome,</span>
+          <span className={styles.userDataValue}>{username}</span>
+        </div>
+        <div className={styles.userDataItem}>
+          <span className={styles.userDataLabel}>Active Users:</span>
+          <span className={styles.userDataValue}>{users.length + 1}</span>
+        </div>
+        <div className={styles.userDataItem}>
+          <span className={styles.userDataLabel}>Current User:</span>
+          <span className={styles.userDataValue} style={{ color: currentUser.info.color }}>
+            {currentUser.info.name}
+          </span>
+        </div>
+        <div className={styles.userDataItem}>
+          <span className={styles.userDataLabel}>Language:</span>
+          <span className={styles.userDataValue}>{roomData.language.toUpperCase()}</span>
+        </div>
       </div>
-      <div className={styles.userData}>
-        <p><strong>Active Users:</strong> {users.length + 1}</p>
-        <p style={{ color: currentUser.info.color }}><strong>Current User:</strong> {currentUser.info.name}</p>      
-      </div>
+
       <div className={styles.editorContainer}>
         <Editor
           onMount={handleOnMount}
           height="100%"
           width="100%"
-          theme="vs-light"
-          defaultLanguage="python"
+          theme="vs-dark"
+          defaultLanguage={roomData.language as string}
           defaultValue=""
           options={{
             tabSize: 2,
@@ -94,9 +168,10 @@ export function EditorClient({ roomId, username }: RoomProps) {
           }}
         />
       </div>
+
       <div className={styles.outputContainer}>
-        <h3>Execution Output:</h3>
-        <pre>{output}</pre>
+        <h3>Execution Output</h3>
+        <pre>{output || "Run your code to see the output here..."}</pre>
       </div>
     </div>
   );
