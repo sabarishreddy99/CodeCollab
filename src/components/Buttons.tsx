@@ -42,6 +42,7 @@ export function Buttons({ editorRef, updateOutput }: ButtonsProps) {
         try {
             const response = await fetch(runtimeEnvLB, {
                 method: "POST",
+                mode: "cors",
                 headers: {
                     "Content-Type": "application/json",
                 },

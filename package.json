@@ -4,9 +4,9 @@
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -H 0.0.0.0 -p 8080",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -H 0.0.0.0 -p 8080",
     "lint": "next lint",
     "clean": "rm -rf .next"
   },

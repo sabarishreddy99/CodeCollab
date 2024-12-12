@@ -7,3 +7,4 @@ docker run -p 3000:3000 codecollab
 
 
 # For X86 Intel 
+docker build --platform=linux/amd64 -t codecollab-x86 .
