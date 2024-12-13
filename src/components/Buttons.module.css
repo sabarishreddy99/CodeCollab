@@ -85,6 +85,15 @@
     background-color: #2d3748;
 }
 
+.installButton {
+    background-color: #8b5cf6;
+    border-color: #8b5cf6;
+}
+
+.installButton:hover:not(:disabled) {
+    background-color: #7c3aed;
+}
+
 .languageIndicator {
     padding: 4px 8px;
     background-color: #333;
@@ -125,6 +134,22 @@
     margin: 0 0 16px 0;
     font-size: 18px;
     font-weight: 500;
+}
+
+.packageInput {
+    width: 100%;
+    padding: 8px 12px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: white;
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.packageInput:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 .versionList {
@@ -194,4 +219,10 @@
 
 .cancelButton:hover {
     background-color: rgba(255, 255, 255, 0.1);
+}
+
+.installStatus {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    margin-bottom: 16px;
 }

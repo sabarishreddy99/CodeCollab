@@ -54,6 +54,10 @@ export function Buttons({
     const [versionsList, setVersionsList] = useState<string[]>([]);
     const [showVersionsModal, setShowVersionsModal] = useState(false);
     const [selectedVersion, setSelectedVersion] = useState<string>("");
+    const [showPackageModal, setShowPackageModal] = useState(false);
+    const [packageInput, setPackageInput] = useState("");
+    const [isInstalling, setIsInstalling] = useState(false);
+    const [installStatus, setInstallStatus] = useState("");
 
     const memberCount = roomData?.data?.members?.length ?? 0;
 
@@ -181,11 +185,37 @@ export function Buttons({
         }
     };
 
+    const handleInstallPackages = async () => {
+        if (!packageInput.trim()) return;
+
+        setIsInstalling(true);
+        const packages = packageInput.split(',').map(pkg => pkg.trim()).filter(pkg => pkg);
+        setInstallStatus("");
+
+        for (const pkg of packages) {
+            try {
+                setInstallStatus(prev => prev + `Installing ${pkg}...\n`);
+                const response = await fetch(
+                    `http://fargateload-928083646.us-east-2.elb.amazonaws.com:8080/install-package?language=python&package=${pkg}`,
+                    { method: 'POST' }
+                );
+
+                const data = await response.json();
+                setInstallStatus(prev => prev + `${data.message}\n`);
+            } catch (error) {
+                setInstallStatus(prev => prev + `Failed to install ${pkg}\n`);
+            }
+        }
+
+        setIsInstalling(false);
+    };
+
     const formatVersion = (version: string, index: number) => {
         return `Version ${versionsList.length - index}`;
     };
 
     const isRunDisabled = isRunning || (memberCount < 2 && initialTimer);
+    const isPythonLanguage = language.toLowerCase() === 'python';
 
     return (
         <>
@@ -203,6 +233,15 @@ export function Buttons({
                     {isRunning ? 'Running...' : 
                      (memberCount < 2 && initialTimer) ? `Wait ${timeRemaining}s` : 'Run Code'}
                 </button>
+                {isPythonLanguage && (
+                    <button 
+                        className={`${styles.button} ${styles.installButton}`}
+                        onClick={() => setShowPackageModal(true)}
+                        disabled={isInstalling}
+                    >
+                        {isInstalling ? 'Installing...' : 'Install Packages'}
+                    </button>
+                )}
                 <button 
                     className={`${styles.button} ${styles.saveButton}`} 
                     onClick={handleSaveSnapshot}
@@ -261,6 +300,47 @@ export function Buttons({
                                 }}
                             >
                                 Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {showPackageModal && (
+                <div className={styles.modal}>
+                    <div className={styles.modalContent}>
+                        <h3>Install Python Packages</h3>
+                        <input
+                            type="text"
+                            className={styles.packageInput}
+                            value={packageInput}
+                            onChange={(e) => setPackageInput(e.target.value)}
+                            placeholder="Enter package names (comma-separated)"
+                            disabled={isInstalling}
+                        />
+                        {installStatus && (
+                            <pre className={styles.installStatus}>
+                                {installStatus}
+                            </pre>
+                        )}
+                        <div className={styles.modalActions}>
+                            <button 
+                                className={`${styles.button} ${styles.confirmButton}`}
+                                onClick={handleInstallPackages}
+                                disabled={isInstalling || !packageInput.trim()}
+                            >
+                                {isInstalling ? 'Installing...' : 'Install'}
+                            </button>
+                            <button 
+                                className={`${styles.button} ${styles.cancelButton}`}
+                                onClick={() => {
+                                    setShowPackageModal(false);
+                                    setPackageInput("");
+                                    setInstallStatus("");
+                                }}
+                                disabled={isInstalling}
+                            >
+                                Close
                             </button>
                         </div>
                     </div>
