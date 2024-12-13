@@ -32,8 +32,8 @@ export default function HomePage() {
   const router = useRouter();
 
   const languageOptions: LanguageOption[] = [
-    { value: "node", label: "JavaScript" },
     { value: "python", label: "Python" },
+    { value: "node", label: "JavaScript" },
     { value: "cpp", label: "C++" }
   ];
 
@@ -70,12 +70,12 @@ export default function HomePage() {
       }
 
       const roomData: RoomData = await response.json();
-
-      // Encode the room data to pass via URL
-      const encodedRoomData = encodeURIComponent(JSON.stringify(roomData));
       
-      // Navigate to the room
-      router.push(`/roomRoute?roomData=${encodedRoomData}&username=${username}`);
+      // Store the room data in sessionStorage
+      sessionStorage.setItem('roomData', JSON.stringify(roomData));
+      
+      // Navigate with only essential parameters
+      router.push(`/roomRoute?roomId=${roomId}&username=${username}&language=${selectedLanguage}`);
     } catch (error) {
       console.error('Error launching room:', error);
       setError('Failed to create room. Please try again.');

@@ -2,6 +2,8 @@ type UserInfo = {
   name: string;
   color: string;
   picture: string;
+  // language: string;
+  // roomId: string;
 };
 
 export type UserAwareness = {

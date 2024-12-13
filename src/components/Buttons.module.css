@@ -44,13 +44,18 @@
 .button:hover {
     background-color: rgba(255, 255, 255, 0.2);
 }
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
   
 .runButton {
     background-color: #2563eb;
     border-color: #2563eb;
 }
   
-.runButton:hover {
+.runButton:hover:not(:disabled) {
     background-color: #1d4ed8;
 }
   
@@ -59,7 +64,7 @@
     border-color: #059669;
 }
   
-.saveButton:hover {
+.saveButton:hover:not(:disabled) {
     background-color: #047857;
 }
 
@@ -68,6 +73,125 @@
     border-color: #dc2626;
 }
 
-.logoutButton:hover {
+.logoutButton:hover:not(:disabled) {
     background-color: #b91c1c;
+}
+
+.retrieveButton {
+    background-color: #4a5568;
+}
+
+.retrieveButton:hover:not(:disabled) {
+    background-color: #2d3748;
+}
+
+.languageIndicator {
+    padding: 4px 8px;
+    background-color: #333;
+    color: white;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Modal styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background: #1a1a1a;
+    padding: 24px;
+    border-radius: 8px;
+    min-width: 400px;
+    max-width: 600px;
+    max-height: 80vh;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.modalContent h3 {
+    color: white;
+    margin: 0 0 16px 0;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.versionList {
+    overflow-y: auto;
+    max-height: 50vh;
+    margin-bottom: 16px;
+}
+
+.versionItem {
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.versionItem:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.selectedVersion {
+    background: rgba(37, 99, 235, 0.2) !important;
+    border-color: #2563eb;
+}
+
+.versionHeader {
+    color: white;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.versionId {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    font-family: monospace;
+    word-break: break-all;
+}
+
+.modalActions {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.confirmButton {
+    background-color: #2563eb;
+    border-color: #2563eb;
+    flex: 1;
+}
+
+.confirmButton:hover:not(:disabled) {
+    background-color: #1d4ed8;
+}
+
+.confirmButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.cancelButton {
+    background-color: transparent;
+    border-color: rgba(255, 255, 255, 0.2);
+    flex: 1;
+}
+
+.cancelButton:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }

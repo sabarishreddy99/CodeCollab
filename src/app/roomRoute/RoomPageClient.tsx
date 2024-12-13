@@ -45,19 +45,26 @@ export function RoomPage() {
 
   useEffect(() => {
     setIsClient(true);
-    const encodedRoomData = searchParams.get('roomData');
+    const roomId = searchParams.get('roomId');
     const username = searchParams.get('username');
+    const language = searchParams.get('language');
 
-    if (!encodedRoomData || !username) {
-      setError('Missing required room data or username.');
+    if (!roomId || !username || !language) {
+      setError('Missing required parameters.');
       return;
     }
 
     try {
-      const decoded = JSON.parse(decodeURIComponent(encodedRoomData));
-      setRoomData(decoded);
+      // Retrieve room data from sessionStorage
+      const storedRoomData = sessionStorage.getItem('roomData');
+      if (storedRoomData) {
+        const parsedRoomData = JSON.parse(storedRoomData);
+        setRoomData(parsedRoomData);
+      } else {
+        setError('Room data not found.');
+      }
     } catch (error) {
-      setError('Invalid room data format.');
+      setError('Error retrieving room data.');
     }
   }, [searchParams]);
 
@@ -76,7 +83,7 @@ export function RoomPage() {
   return (
     <main className="h-screen">
       <Room 
-        roomId={roomData.roomId} 
+        roomId={searchParams.get('roomId')!} 
         username={searchParams.get('username')!}
       >
         <Suspense fallback={<Loading />}>
