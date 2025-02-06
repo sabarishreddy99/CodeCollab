@@ -61,8 +61,3 @@ CodeCollab is a real-time collaborative code editor that allows multiple users t
 
 ## 📜 License
 This project is licensed under the MIT License.
-
-## 📞 Contact
-For any inquiries, feel free to reach out:
-- **GitHub**: [sabarishreddy99](https://github.com/sabarishreddy99)
-- **Email**: [your-email@example.com](mailto:your-email@example.com)
