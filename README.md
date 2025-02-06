@@ -1,7 +1,5 @@
 # CodeCollab
 
-![CodeCollab Banner](https://via.placeholder.com/1000x300.png?text=CodeCollab)
-
 CodeCollab is a real-time collaborative code editor that allows multiple users to write and modify code simultaneously, similar to Google Docs but for coding. Built for seamless teamwork, CodeCollab ensures efficient collaboration with live code updates, a dynamic execution environment, and version control.
 
 ## 📺 Demo Video
@@ -27,12 +25,18 @@ CodeCollab is a real-time collaborative code editor that allows multiple users t
 - **Monitoring & Scaling**: AWS CloudWatch, Load Balancer, AWS Fargate
 
 ## 📸 Screenshots
+### System Architecture
+![Collaborative Code Editor architecture](Collaborative%20Code%20Editor%20architecture.jpeg)
 ### Login Page
-![Login Page](https://via.placeholder.com/600x300.png?text=Login+Page)
+![Login](login.jpeg)
 ### Code Editor Interface
-![Editor](https://via.placeholder.com/600x300.png?text=Editor+Interface)
+![Collaboration](collaboration.jpeg)
 ### Real-Time Code Execution
-![Execution](https://via.placeholder.com/600x300.png?text=Code+Execution)
+![Code Execution](code_execution.jpeg)
+### Snapshot Saved
+![Snapshot Saved](snapshot_saved.jpeg)
+### Version History
+![Version History](version_history.jpeg)
 
 ## 💻 Setup Instructions
 1. **Clone the repository**
@@ -57,3 +61,8 @@ CodeCollab is a real-time collaborative code editor that allows multiple users t
 
 ## 📜 License
 This project is licensed under the MIT License.
+
+## 📞 Contact
+For any inquiries, feel free to reach out:
+- **GitHub**: [sabarishreddy99](https://github.com/sabarishreddy99)
+- **Email**: [your-email@example.com](mailto:your-email@example.com)
