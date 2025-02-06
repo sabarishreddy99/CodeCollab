@@ -26,17 +26,17 @@ CodeCollab is a real-time collaborative code editor that allows multiple users t
 
 ## 📸 Screenshots
 ### System Architecture
-![Collaborative Code Editor architecture](Collaborative%20Code%20Editor%20architecture.jpeg)
+![Collaborative Code Editor architecture](/images/Collaborative%20Code%20Editor%20architecture.jpeg)
 ### Login Page
-![Login](login.jpeg)
+![Login](/images/login.jpeg)
 ### Code Editor Interface
-![Collaboration](collaboration.jpeg)
+![Collaboration](/images/collaboration.jpeg)
 ### Real-Time Code Execution
-![Code Execution](code_execution.jpeg)
+![Code Execution](/images/code_execution.jpeg)
 ### Snapshot Saved
-![Snapshot Saved](snapshot_saved.jpeg)
+![Snapshot Saved](/images/snapshot_saved.jpeg)
 ### Version History
-![Version History](version_history.jpeg)
+![Version History](/images/version_history.jpeg)
 
 ## 💻 Setup Instructions
 1. **Clone the repository**
