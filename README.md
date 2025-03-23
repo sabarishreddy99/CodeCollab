@@ -15,9 +15,9 @@ CodeCollab is a real-time collaborative code editor that allows multiple users t
 - **Snapshot and Session Management**: Save snapshots of code states and restore previous versions.
 
 ## 🛠 Tech Stack
-- **Frontend**: React, Tailwind CSS
-- **Backend**: Node.js, Express.js
-- **Database**: Firebase, Amazon DynamoDB
+- **Frontend**: Next.js, Tailwind CSS
+- **Backend**: Node.js, Express.js, Python, Flask
+- **Database**: Amazon DynamoDB
 - **Real-time Collaboration**: WebSockets (Socket.io), Y.js (CRDT-based synchronization)
 - **Code Execution**: AWS ECS, AWS Lambda, Docker Containers
 - **Storage & Versioning**: Amazon S3, Snapshot Service
